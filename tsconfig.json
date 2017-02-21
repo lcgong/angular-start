@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "sourceRoot": "web",
+    "outDir": "web/build/transpiled",
+    "sourceMap": true,
+    "paths" : {
+      "web/*": ["./web/*"]
+    },
+    "target": "es2015",
+    "module": "umd",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [ "es2015", "dom" ],
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true
+  },
+  "exclude": [
+    "node_modules/*",
+    "web/jspm_packages/*"
+  ]
+}
