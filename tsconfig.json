@@ -1,12 +1,12 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "rootDir": "web",
+    "rootDir": "src",
     "outDir": "transpiled",
     "sourceRoot": "/",
     "baseUrl": ".",
     "paths" : {
-      "app/*" : ["web/*"]
+      "app/*" : ["src/*"]
     },
     "target": "es5",
     "module": "commonjs",
@@ -21,7 +21,7 @@
   "exclude": [
     "node_modules",
     "jspm_packages",
-    "transpiled",
+    "compiled",
     "build"
   ]
 }

@@ -1,17 +1,19 @@
 {
   "scripts": {
     "tsc": "tsc",
-    "tsc:w": "tsc -w --sourceRoot './'"
+    "tsc:w": "tsc"
   },
   "jspm": {
     "name": "app",
-    "main": "web/index.js",
+    "main___": "src/index.js",
     "configFiles": {
-      "jspm": "web/jspm.config.js"
+      "jspm": "src/jspm.config.js"
     },
     "dependencies": {
       "@angular/forms": "npm:@angular/forms@^2.4.8",
+      "@angular/http": "npm:@angular/http@^2.4.8",
       "@angular/platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@^2.4.8",
+      "@angular/router": "npm:@angular/router@^3.4.8",
       "reflect-metadata": "npm:reflect-metadata@^0.1.10",
       "shim": "npm:shim@^0.6.0"
     },
@@ -88,6 +90,20 @@
           "./testing": "./bundles/core-testing.umd.js"
         }
       },
+      "npm:@angular/http@2.4.8": {
+        "meta": {
+          "src/*.js": {
+            "deps": [
+              "reflect-metadata",
+              "zone.js"
+            ]
+          }
+        },
+        "map": {
+          "@angular/http": ".",
+          "./testing": "./bundles/http-testing.umd.js"
+        }
+      },
       "npm:@angular/platform-browser-dynamic@2.4.8": {
         "meta": {
           "src/*.js": {
@@ -114,6 +130,20 @@
         "map": {
           "@angular/platform-browser": ".",
           "./testing": "./bundles/platform-browser-testing.umd.js"
+        }
+      },
+      "npm:@angular/router@3.4.8": {
+        "meta": {
+          "src/*.js": {
+            "deps": [
+              "reflect-metadata",
+              "zone.js"
+            ]
+          }
+        },
+        "map": {
+          "@angular/router": ".",
+          "./testing": "./bundles/router-testing.umd.js"
         }
       },
       "npm:inherits@2.0.3": {

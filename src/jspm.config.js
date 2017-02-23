@@ -25,7 +25,10 @@ SystemJS.config({
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": [ "es2015", "dom" ],
+    "lib": [
+      "es2015",
+      "dom"
+    ],
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true
   },
@@ -69,8 +72,10 @@ SystemJS.config({
     "@angular/compiler": "npm:@angular/compiler@2.4.8",
     "@angular/core": "npm:@angular/core@2.4.8",
     "@angular/forms": "npm:@angular/forms@2.4.8",
+    "@angular/http": "npm:@angular/http@2.4.8",
     "@angular/platform-browser": "npm:@angular/platform-browser@2.4.8",
     "@angular/platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@2.4.8",
+    "@angular/router": "npm:@angular/router@3.4.8",
     "assert": "npm:jspm-nodelibs-assert@0.2.0",
     "buffer": "npm:jspm-nodelibs-buffer@0.2.1",
     "constants": "npm:jspm-nodelibs-constants@0.2.0",
@@ -152,7 +157,7 @@ SystemJS.config({
         "bn.js": "npm:bn.js@4.11.6",
         "parse-asn1": "npm:parse-asn1@5.0.0",
         "browserify-rsa": "npm:browserify-rsa@4.0.1",
-        "elliptic": "npm:elliptic@6.3.3"
+        "elliptic": "npm:elliptic@6.4.0"
       }
     },
     "npm:create-hmac@1.1.4": {
@@ -202,13 +207,13 @@ SystemJS.config({
     "npm:create-ecdh@4.0.0": {
       "map": {
         "bn.js": "npm:bn.js@4.11.6",
-        "elliptic": "npm:elliptic@6.3.3"
+        "elliptic": "npm:elliptic@6.4.0"
       }
     },
     "npm:miller-rabin@4.0.0": {
       "map": {
         "bn.js": "npm:bn.js@4.11.6",
-        "brorand": "npm:brorand@1.0.7"
+        "brorand": "npm:brorand@1.1.0"
       }
     },
     "npm:parse-asn1@5.0.0": {
@@ -224,14 +229,6 @@ SystemJS.config({
       "map": {
         "bn.js": "npm:bn.js@4.11.6",
         "randombytes": "npm:randombytes@2.0.3"
-      }
-    },
-    "npm:elliptic@6.3.3": {
-      "map": {
-        "bn.js": "npm:bn.js@4.11.6",
-        "inherits": "npm:inherits@2.0.3",
-        "brorand": "npm:brorand@1.0.7",
-        "hash.js": "npm:hash.js@1.0.3"
       }
     },
     "npm:des.js@1.0.0": {
@@ -304,6 +301,24 @@ SystemJS.config({
         "core-util-is": "npm:core-util-is@1.0.2",
         "process-nextick-args": "npm:process-nextick-args@1.0.7",
         "util-deprecate": "npm:util-deprecate@1.0.2"
+      }
+    },
+    "npm:elliptic@6.4.0": {
+      "map": {
+        "bn.js": "npm:bn.js@4.11.6",
+        "inherits": "npm:inherits@2.0.3",
+        "hash.js": "npm:hash.js@1.0.3",
+        "minimalistic-crypto-utils": "npm:minimalistic-crypto-utils@1.0.1",
+        "brorand": "npm:brorand@1.1.0",
+        "hmac-drbg": "npm:hmac-drbg@1.0.0",
+        "minimalistic-assert": "npm:minimalistic-assert@1.0.0"
+      }
+    },
+    "npm:hmac-drbg@1.0.0": {
+      "map": {
+        "hash.js": "npm:hash.js@1.0.3",
+        "minimalistic-assert": "npm:minimalistic-assert@1.0.0",
+        "minimalistic-crypto-utils": "npm:minimalistic-crypto-utils@1.0.1"
       }
     }
   }

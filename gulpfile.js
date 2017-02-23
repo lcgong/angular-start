@@ -37,7 +37,7 @@ gulp.task('webapp', function() {
     .use('/node_modules', staticHandler('node_modules'))
     .use('/jspm_packages', staticHandler('jspm_packages'))
     .use('/', staticHandler('transpiled'))
-    .use('/', staticHandler('web'));
+    .use('/', staticHandler('src'));
 
   http.createServer(app).listen(port, () => {
     console.log(formatTimestamp() + ' ' + 'Webapp is listening on ['
@@ -80,7 +80,6 @@ gulp.task('webapp', function() {
 });
 
 
-
 const jspmBundleOpts =  {
   minify: true,
   sourceMaps: true,
@@ -89,7 +88,6 @@ const jspmBundleOpts =  {
 };
 
 const webBuildDir = 'build/';
-
 
 gulp.task('thirdparty', function() {
   // 将devConfig出现的包临时添加到主配置里，因为在bundle时无法找到devConfig定义的
@@ -126,57 +124,57 @@ gulp.task('thirdparty', function() {
   	return builder.bundle(packages, webBuildDir + outfile, jspmBundleOpts);
   }
 });
-
-gulp.task('bundle:rxjs', [], (cb) => {
-  let SystemJSBuilder = require('systemjs-builder');
-  let builder = new SystemJSBuilder();
-
-  // let rxmap = {};
-  // .forEach(function (submodule) {
-  //    rxmap['rxjs/' + submodule] = 'rxjs';
-  // })
-
-  let packages;
-  packages = [
-     'Rx',
-     'Observable',
-     'Subject',
-     'observable/PromiseObservable',
-     'operator/toPromise'
-  ].map((submodule) => 'rxjs/' + submodule);
-
-  let rxmap = packages.reduce((rxmap, pkg) => {
-    rxmap[pkg] = 'rxjs';
-    return rxmap;
-  }, {});
-
-  packages = packages.join(' + ')
-
-  let config = {
-      paths: {
-          "rxjs/*" : "node_modules/rxjs/*.js",
-      },
-      map: {
-          "rxjs": "node_modules/rxjs",
-      },
-      packages: {
-          "rxjs": {
-            main: "Rx.js",
-            defaultExtension: "js"
-          }
-      }
-  };
-
-  builder.config(config);
-
-  console.log(packages, config);
-
-  // builder.bundle(packages, "build/rxjs.umd.js", {
-  builder.bundle('rxjs', "build/rxjs.umd.js", {
-      normalize: true,
-      runtime: false,
-      minify: true,
-      sourceMaps: true,
-      mangle: false
-  });
-});
+//
+// gulp.task('bundle:rxjs', [], (cb) => {
+//   let SystemJSBuilder = require('systemjs-builder');
+//   let builder = new SystemJSBuilder();
+//
+//   // let rxmap = {};
+//   // .forEach(function (submodule) {
+//   //    rxmap['rxjs/' + submodule] = 'rxjs';
+//   // })
+//
+//   let packages;
+//   packages = [
+//      'Rx',
+//      'Observable',
+//      'Subject',
+//      'observable/PromiseObservable',
+//      'operator/toPromise'
+//   ].map((submodule) => 'rxjs/' + submodule);
+//
+//   let rxmap = packages.reduce((rxmap, pkg) => {
+//     rxmap[pkg] = 'rxjs';
+//     return rxmap;
+//   }, {});
+//
+//   packages = packages.join(' + ')
+//
+//   let config = {
+//       paths: {
+//           "rxjs/*" : "node_modules/rxjs/*.js",
+//       },
+//       map: {
+//           "rxjs": "node_modules/rxjs",
+//       },
+//       packages: {
+//           "rxjs": {
+//             main: "Rx.js",
+//             defaultExtension: "js"
+//           }
+//       }
+//   };
+//
+//   builder.config(config);
+//
+//   console.log(packages, config);
+//
+//   // builder.bundle(packages, "build/rxjs.umd.js", {
+//   builder.bundle('rxjs', "build/rxjs.umd.js", {
+//       normalize: true,
+//       runtime: false,
+//       minify: true,
+//       sourceMaps: true,
+//       mangle: false
+//   });
+// });
