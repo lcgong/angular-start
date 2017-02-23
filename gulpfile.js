@@ -23,21 +23,46 @@ gulp.task('webapp', function() {
 
   let port = 8888;
 
-  let connect = require('connect');
+  let express = require('express');
   let http = require('http');
-  let staticHandler = require('serve-static');
+  let serveStatic = require('serve-static');
   let historyHandler = require('connect-history-api-fallback');
+  let helmet = require('helmet');
+  let cors = require('cors');
 
-  let app = connect()
-    .use(loggerHandler)
-    .use(historyHandler({ // 所有没有后缀的访问路径均转向指定的页面
-      index: '/index.html',
-    }))
-    .use('/build', staticHandler('build'))
-    .use('/node_modules', staticHandler('node_modules'))
-    .use('/jspm_packages', staticHandler('jspm_packages'))
-    .use('/', staticHandler('transpiled'))
-    .use('/', staticHandler('src'));
+  let app = express();
+  app.use(loggerHandler)
+  app.use(helmet.contentSecurityPolicy({
+      directives: {
+        defaultSrc: ["'self'"], connectSrc : ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-eval'"], styleSrc: ["'self'"],
+        objectSrc: ["'none'"], frameSrc: ["'none'"], imgSrc: ["'self'"],
+        mediaSrc: ["'self'"], fontSrc: ["'self'", "data:"],
+        reportUri: '/report-violation',
+      }
+    }));
+  app.use(cors());
+    // app.use(function (req, res, next) {
+    //
+    //     // Website you wish to allow to connect
+    //     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8888 null');
+    //     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, ELETE');
+    //     // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type');
+    //
+    //     // Set to true if you need the website to include cookies in the requests sent
+    //     // to the API (e.g. in case you use sessions)
+    //     res.setHeader('Access-Control-Allow-Credentials', true);
+    //
+    //     next();
+    // })
+  app.use(historyHandler({ // 所有没有后缀的访问路径均转向指定的页面
+    index: '/index.html',
+  }));
+  app.use('/build', serveStatic('build'));
+  app.use('/node_modules', serveStatic('node_modules'));
+  app.use('/jspm_packages', serveStatic('jspm_packages'));
+  app.use('/', serveStatic('transpiled'));
+  app.use('/', serveStatic('src'));
 
   http.createServer(app).listen(port, () => {
     console.log(formatTimestamp() + ' ' + 'Webapp is listening on ['
@@ -80,49 +105,52 @@ gulp.task('webapp', function() {
 });
 
 
-const jspmBundleOpts =  {
-  minify: true,
-  sourceMaps: true,
-  mangle: false,
-  format: 'umd'
+
+//--------------------------------------------------------------------------
+const bundleOpts =  {
+    minify: true,
+    sourceMaps: true,
+    mangle: false,
+    format: 'umd'
 };
 
-const webBuildDir = 'build/';
+gulp.task('thirdparty', ['thirdparty:rt', 'thirdparty:dev']);
 
-gulp.task('thirdparty', function() {
-  // 将devConfig出现的包临时添加到主配置里，因为在bundle时无法找到devConfig定义的
+gulp.task('thirdparty:rt', function() {
+  //从jspm config读取所需要的包
+  let jspmConfigMgr = require('jspm/lib/config');
+  jspmConfigMgr.loadSync();
+
+  // 运行时库
+  let packages = Object.keys(jspmConfigMgr.loader.getConfig().map).sort();
 
   let Builder = require('jspm').Builder;
-	let builder = new Builder();
+  let builder = new Builder();
 
+  console.log('packages: ', packages.join(', '));
+  return builder.bundle(packages.join(' + '), 'build/lib.rt.js', bundleOpts);
+});
+
+gulp.task('thirdparty:dev', function() {
+  //从jspm config读取所需要的包
   let jspmConfigMgr = require('jspm/lib/config');
   jspmConfigMgr.loadSync();
 
   let config = Object.assign({}, jspmConfigMgr.loader.getConfig());
 
-  let rtPackages = Object.keys(config.map); // 定义运行的库
-  let devPackages = Object.keys(config.devConfig.map); // 定义在开发时的库
+  let packages = Object.keys(config.devConfig.map).sort(); // 开发时的库
 
+  // 将devConfig出现的包临时添加到主配置里，因为在bundle时无法找到devConfig定义的
   Object.assign(config.map, config.devConfig.map);
   Object.assign(config.packages, config.devConfig.packages);
+
+  let Builder = require('jspm').Builder;
+  let builder = new Builder();
+
   builder.loader.config(config);
 
-  return Promise.all([
-    bundle('Build runtime bundles: ', rtPackages, 'thirdparty.rt.js'),
-    // bundle('Build devlepment bundles: ', devPackages, 'thirdparty.dev.js')
-  ]);
-
-  function bundle(title, packages, outfile) {
-
-    let Builder = require('jspm').Builder;
-  	let builder = new Builder();
-
-    packages = packages.join(' + ');
-
-    console.log(title, packages);
-
-  	return builder.bundle(packages, webBuildDir + outfile, jspmBundleOpts);
-  }
+  console.log('packages: ', packages.sort().join(', '));
+  return builder.bundle(packages.join(' + '), 'build/lib.dev.js', bundleOpts);
 });
 //
 // gulp.task('bundle:rxjs', [], (cb) => {
