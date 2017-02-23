@@ -1,4 +1,5 @@
 node_modules
-web/build
-web/jspm_packages
+build
+transpiled
+jspm_packages
 *.log

@@ -8,16 +8,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title></title>
-
   <script src="jspm_packages/system.js"></script>
-  <script src="build/thirdparty.rt.js"></script>
-  <script src="build/thirdparty.dev.js"></script>
   <script src="jspm.config.js"></script>
-  <script src="index.js"></script>
-
+  <script src="build/thirdparty.rt.js"></script>
+  <script>
+  System.import('app/bootstrap').catch(function(err){ console.error(err); });
+  </script>
 </head>
 
 <body>
-
+<who></who>
 </body>
 </html>

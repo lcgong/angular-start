@@ -1,13 +1,26 @@
+import { NgModule, Component } from "@angular/core";
+
+@Component({
+  selector: 'who',
+  template: `
+      <input [(ngModel)]="name">
+      <br>
+      Hello, {{name}}
+  `,
+})
+export class WhoComp {
+  name: string = '';
+
+  constructor() {
+    console.log('123');
+    xyzsd;
+    // throw 'xyz';
+  }
+};
 
 
-import 'util.ts';
-
-function hi(x: string) {
-  console.log('45xx');
-  throw 'ddd';
-}
-
-hi(1233);
+//
+// hi(1233);
 
 // //============================================================================
 //

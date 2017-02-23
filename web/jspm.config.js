@@ -2,8 +2,7 @@ SystemJS.config({
   paths: {
     "github:": "jspm_packages/github/",
     "npm:": "jspm_packages/npm/",
-    "app/": "build/transpiled/",
-    "app/": "",
+    "app/": ""
   },
   browserConfig: {
     "baseURL": "/"
@@ -11,8 +10,7 @@ SystemJS.config({
   transpiler: "plugin-typescript",
   packages: {
     "app": {
-      "main": "app.js",
-      "defaultExtension": "ts",
+      "defaultExtension___": "ts",
       "meta": {
         "*.ts": {
           "loader": "plugin-typescript"
@@ -21,37 +19,43 @@ SystemJS.config({
     }
   },
   typescriptOptions: {
-    "target": "es2015",
-    "module": "system",
+    "check": true,
+    "target": "es5",
+    "module": "commonjs",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [ "es2015", "dom" ],
     "noImplicitAny": true,
-    "typeCheck": true,
-    "tsconfig": false
+    "suppressImplicitAnyIndexErrors": true
   },
   devConfig: {
     "map": {
-      "plugin-typescript": "github:frankwallis/plugin-typescript@6.0.5",
+      "plugin-typescript": "npm:plugin-typescript@6.0.4",
       "net": "npm:jspm-nodelibs-net@0.2.0",
       "child_process": "npm:jspm-nodelibs-child_process@0.2.0",
-      "module": "npm:jspm-nodelibs-module@0.2.0"
+      "module": "npm:jspm-nodelibs-module@0.2.0",
+      "readable-stream": "npm:readable-stream@2.2.3",
+      "typescript": "npm:typescript@2.2.1"
     },
     "packages": {
-      "github:frankwallis/plugin-typescript@6.0.5": {
-        "map": {
-          "typescript": "npm:typescript@2.2.0"
-        }
-      },
-      "npm:typescript@2.2.0": {
-        "map": {
-          "source-map-support": "npm:source-map-support@0.4.11"
-        }
-      },
       "npm:source-map-support@0.4.11": {
         "map": {
           "source-map": "npm:source-map@0.5.6"
         }
+      },
+      "npm:typescript@2.2.1": {
+        "map": {
+          "source-map-support": "npm:source-map-support@0.4.11"
+        }
+      },
+      "npm:plugin-typescript@6.0.4": {
+        "map": {
+          "typescript": "npm:typescript@2.2.1"
+        }
       }
     }
-  },
+  }
 });
 
 SystemJS.config({
@@ -64,6 +68,9 @@ SystemJS.config({
     "@angular/common": "npm:@angular/common@2.4.8",
     "@angular/compiler": "npm:@angular/compiler@2.4.8",
     "@angular/core": "npm:@angular/core@2.4.8",
+    "@angular/forms": "npm:@angular/forms@2.4.8",
+    "@angular/platform-browser": "npm:@angular/platform-browser@2.4.8",
+    "@angular/platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@2.4.8",
     "assert": "npm:jspm-nodelibs-assert@0.2.0",
     "buffer": "npm:jspm-nodelibs-buffer@0.2.1",
     "constants": "npm:jspm-nodelibs-constants@0.2.0",
@@ -73,7 +80,9 @@ SystemJS.config({
     "os": "npm:jspm-nodelibs-os@0.2.0",
     "path": "npm:jspm-nodelibs-path@0.2.1",
     "process": "npm:jspm-nodelibs-process@0.2.0",
+    "reflect-metadata": "npm:reflect-metadata@0.1.10",
     "rxjs": "npm:rxjs@5.1.1",
+    "shim": "npm:shim@0.6.0",
     "stream": "npm:jspm-nodelibs-stream@0.2.0",
     "string_decoder": "npm:jspm-nodelibs-string_decoder@0.2.0",
     "timers": "npm:jspm-nodelibs-timers@0.2.0",
@@ -256,18 +265,7 @@ SystemJS.config({
     "npm:stream-browserify@2.0.1": {
       "map": {
         "inherits": "npm:inherits@2.0.3",
-        "readable-stream": "npm:readable-stream@2.2.2"
-      }
-    },
-    "npm:readable-stream@2.2.2": {
-      "map": {
-        "inherits": "npm:inherits@2.0.3",
-        "string_decoder": "npm:string_decoder@0.10.31",
-        "buffer-shims": "npm:buffer-shims@1.0.0",
-        "util-deprecate": "npm:util-deprecate@1.0.2",
-        "isarray": "npm:isarray@1.0.0",
-        "core-util-is": "npm:core-util-is@1.0.2",
-        "process-nextick-args": "npm:process-nextick-args@1.0.7"
+        "readable-stream": "npm:readable-stream@2.2.3"
       }
     },
     "npm:jspm-nodelibs-buffer@0.2.1": {
@@ -295,6 +293,17 @@ SystemJS.config({
     "npm:timers-browserify@1.4.2": {
       "map": {
         "process": "npm:process@0.11.9"
+      }
+    },
+    "npm:readable-stream@2.2.3": {
+      "map": {
+        "isarray": "npm:isarray@1.0.0",
+        "inherits": "npm:inherits@2.0.3",
+        "string_decoder": "npm:string_decoder@0.10.31",
+        "buffer-shims": "npm:buffer-shims@1.0.0",
+        "core-util-is": "npm:core-util-is@1.0.2",
+        "process-nextick-args": "npm:process-nextick-args@1.0.7",
+        "util-deprecate": "npm:util-deprecate@1.0.2"
       }
     }
   }

@@ -15,7 +15,7 @@ gulp.task('tsc', function () {
 
   return gulp.src('web/**/*.ts')
     .pipe(ts(prj))
-    .pipe(gulp.dest('web/build/transpiled'));
+    .pipe(gulp.dest('web/transpiled'));
 });
 
 gulp.task('webapp', function() {
@@ -28,25 +28,35 @@ gulp.task('webapp', function() {
   let staticHandler = require('serve-static');
   let historyHandler = require('connect-history-api-fallback');
 
-  let chalk = require('chalk');
-  let moment = require('moment');
-
   let app = connect()
     .use(loggerHandler)
     .use(historyHandler({ // 所有没有后缀的访问路径均转向指定的页面
       index: '/index.html',
     }))
-    .use(staticHandler('web'));
+    .use('/build', staticHandler('build'))
+    .use('/node_modules', staticHandler('node_modules'))
+    .use('/jspm_packages', staticHandler('jspm_packages'))
+    .use('/', staticHandler('transpiled'))
+    .use('/', staticHandler('web'));
+
   http.createServer(app).listen(port, () => {
-    console.log(formatNow() + ' ' + 'Webapp is listening on ['
+    console.log(formatTimestamp() + ' ' + 'Webapp is listening on ['
       + chalk.bold.yellow(port) + '] ...');
   });
 
-  function formatNow() {
-    return '[' + chalk.gray(moment().format('hh:mm:ss')) + ']';
+  let chalk = require('chalk');
+  let moment = require('moment');
+
+  function formatTimestamp() {
+    let now = new Date();
+    let padding = (n) => (n < 10) ? "0" + n : n;
+    return ['[', chalk.grey(padding(now.getHours())), chalk.grey(':'),
+            chalk.bold.grey(padding(now.getMinutes())), chalk.grey(':'),
+            chalk.bold.grey(padding(now.getSeconds())), ']'].join('');
   }
 
   function loggerHandler(req, res, next) { // 记录访问日志
+    let path = req.url;
     var end = res.end;
     req._startTime = new Date();
     res.end = (chunk, encoding, callback) => {
@@ -56,10 +66,10 @@ gulp.task('webapp', function() {
         // 等这轮事件结束再输出日志
         let code = (res.statusCode < 400) ? chalk.bold.green : chalk.bold.red;
         let msg = [
-          formatNow(),
+          formatTimestamp(),
           code(res.statusCode),
           chalk.bold.cyan(req.method),
-          req.url,
+          path,
           chalk.magenta('' + (new Date() - req._startTime) + 'ms')
         ].join(' ');
         console.log(msg);
@@ -74,10 +84,11 @@ gulp.task('webapp', function() {
 const jspmBundleOpts =  {
   minify: true,
   sourceMaps: true,
-  mangle: false
+  mangle: false,
+  format: 'umd'
 };
 
-const webBuildDir = 'web/build/';
+const webBuildDir = 'build/';
 
 
 gulp.task('thirdparty', function() {
@@ -100,7 +111,7 @@ gulp.task('thirdparty', function() {
 
   return Promise.all([
     bundle('Build runtime bundles: ', rtPackages, 'thirdparty.rt.js'),
-    bundle('Build devlepment bundles: ', devPackages, 'thirdparty.dev.js')
+    // bundle('Build devlepment bundles: ', devPackages, 'thirdparty.dev.js')
   ]);
 
   function bundle(title, packages, outfile) {

@@ -6,22 +6,28 @@
   "jspm": {
     "name": "app",
     "main": "web/index.js",
-    "directories": {
-      "baseURL": "web"
+    "configFiles": {
+      "jspm": "web/jspm.config.js"
     },
-
     "dependencies": {
-      "@angular/common": "npm:@angular/common@^2.4.8",
-      "@angular/compiler": "npm:@angular/compiler@^2.4.8"
+      "@angular/forms": "npm:@angular/forms@^2.4.8",
+      "@angular/platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@^2.4.8",
+      "reflect-metadata": "npm:reflect-metadata@^0.1.10",
+      "shim": "npm:shim@^0.6.0"
     },
     "devDependencies": {
       "child_process": "npm:jspm-nodelibs-child_process@^0.2.0",
       "module": "npm:jspm-nodelibs-module@^0.2.0",
       "net": "npm:jspm-nodelibs-net@^0.2.0",
-      "plugin-typescript": "github:frankwallis/plugin-typescript@^6.0.5"
+      "plugin-typescript": "npm:plugin-typescript@^6.0.4",
+      "readable-stream": "npm:readable-stream@^2.2.3",
+      "typescript": "npm:typescript@^2.2.1"
     },
     "peerDependencies": {
+      "@angular/common": "npm:@angular/common@^2.4.8",
+      "@angular/compiler": "npm:@angular/compiler@^2.4.8",
       "@angular/core": "npm:@angular/core@^2.4.8",
+      "@angular/platform-browser": "npm:@angular/platform-browser@^2.4.8",
       "assert": "npm:jspm-nodelibs-assert@^0.2.0",
       "buffer": "npm:jspm-nodelibs-buffer@^0.2.0",
       "constants": "npm:jspm-nodelibs-constants@^0.2.0",
@@ -82,12 +88,49 @@
           "./testing": "./bundles/core-testing.umd.js"
         }
       },
+      "npm:@angular/platform-browser-dynamic@2.4.8": {
+        "meta": {
+          "src/*.js": {
+            "deps": [
+              "reflect-metadata",
+              "zone.js"
+            ]
+          }
+        },
+        "map": {
+          "@angular/platform-browser-dynamic": ".",
+          "./testing": "./bundles/platform-browser-dynamic-testing.umd.js"
+        }
+      },
+      "npm:@angular/platform-browser@2.4.8": {
+        "meta": {
+          "src/*.js": {
+            "deps": [
+              "reflect-metadata",
+              "zone.js"
+            ]
+          }
+        },
+        "map": {
+          "@angular/platform-browser": ".",
+          "./testing": "./bundles/platform-browser-testing.umd.js"
+        }
+      },
       "npm:inherits@2.0.3": {
         "ignore": [
           "test.js"
         ]
       },
-      "npm:typescript@2.2.0": {
+      "npm:reflect-metadata@0.1.10": {
+        "jspmNodeConversion": false,
+        "map": {
+          "crypto": {
+            "node": "@node/crypto",
+            "default": "@empty"
+          }
+        }
+      },
+      "npm:typescript@2.2.1": {
         "browser": {},
         "map": {
           "buffer": "@empty",

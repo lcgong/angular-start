@@ -1,13 +1,17 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "sourceRoot": "web",
-    "outDir": "web/build/transpiled",
-    "sourceMap": true,
+    "rootDir": "web",
+    "outDir": "transpiled",
+    "sourceRoot": "/",
+    "baseUrl": ".",
     "paths" : {
-      "web/*": ["./web/*"]
+      "app/*" : ["web/*"]
     },
-    "target": "es2015",
-    "module": "umd",
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": [ "es2015", "dom" ],
@@ -15,7 +19,9 @@
     "suppressImplicitAnyIndexErrors": true
   },
   "exclude": [
-    "node_modules/*",
-    "web/jspm_packages/*"
+    "node_modules",
+    "jspm_packages",
+    "transpiled",
+    "build"
   ]
 }
