@@ -2,35 +2,14 @@ SystemJS.config({
   paths: {
     "github:": "jspm_packages/github/",
     "npm:": "jspm_packages/npm/",
-    "app/": ""
+    "app/": "./"
   },
   browserConfig: {
     "baseURL": "/"
   },
-  transpiler: "plugin-typescript",
   packages: {
     "app": {
-      "defaultExtension": "ts",
-      "meta": {
-        "*.ts": {
-          "loader": "plugin-typescript"
-        }
-      }
     }
-  },
-  typescriptOptions: {
-    "check": true,
-    "target": "es5",
-    "module": "commonjs",
-    "sourceMap": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "lib": [
-      "es2015",
-      "dom"
-    ],
-    "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true
   },
   devConfig: {
     "map": {

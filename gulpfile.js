@@ -35,33 +35,24 @@ gulp.task('webapp', function() {
   app.use(helmet.contentSecurityPolicy({
       directives: {
         defaultSrc: ["'self'"], connectSrc : ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-eval'"], styleSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-eval'"],
+        styleSrc: ["'self'"],
         objectSrc: ["'none'"], frameSrc: ["'none'"], imgSrc: ["'self'"],
         mediaSrc: ["'self'"], fontSrc: ["'self'", "data:"],
         reportUri: '/report-violation',
       }
     }));
-  app.use(cors());
-    // app.use(function (req, res, next) {
-    //
-    //     // Website you wish to allow to connect
-    //     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8888 null');
-    //     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, ELETE');
-    //     // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type');
-    //
-    //     // Set to true if you need the website to include cookies in the requests sent
-    //     // to the API (e.g. in case you use sessions)
-    //     res.setHeader('Access-Control-Allow-Credentials', true);
-    //
-    //     next();
-    // })
+  app.use(cors({
+    "origin": ["*"],
+    "methods": ['GET', 'HEAD'],
+  }));
   app.use(historyHandler({ // 所有没有后缀的访问路径均转向指定的页面
     index: '/index.html',
   }));
   app.use('/build', serveStatic('build'));
   app.use('/node_modules', serveStatic('node_modules'));
   app.use('/jspm_packages', serveStatic('jspm_packages'));
-  app.use('/', serveStatic('transpiled'));
+  app.use('/', serveStatic('build/transpiled'));
   app.use('/', serveStatic('src'));
 
   http.createServer(app).listen(port, () => {
@@ -152,57 +143,3 @@ gulp.task('thirdparty:dev', function() {
   console.log('packages: ', packages.sort().join(', '));
   return builder.bundle(packages.join(' + '), 'build/lib.dev.js', bundleOpts);
 });
-//
-// gulp.task('bundle:rxjs', [], (cb) => {
-//   let SystemJSBuilder = require('systemjs-builder');
-//   let builder = new SystemJSBuilder();
-//
-//   // let rxmap = {};
-//   // .forEach(function (submodule) {
-//   //    rxmap['rxjs/' + submodule] = 'rxjs';
-//   // })
-//
-//   let packages;
-//   packages = [
-//      'Rx',
-//      'Observable',
-//      'Subject',
-//      'observable/PromiseObservable',
-//      'operator/toPromise'
-//   ].map((submodule) => 'rxjs/' + submodule);
-//
-//   let rxmap = packages.reduce((rxmap, pkg) => {
-//     rxmap[pkg] = 'rxjs';
-//     return rxmap;
-//   }, {});
-//
-//   packages = packages.join(' + ')
-//
-//   let config = {
-//       paths: {
-//           "rxjs/*" : "node_modules/rxjs/*.js",
-//       },
-//       map: {
-//           "rxjs": "node_modules/rxjs",
-//       },
-//       packages: {
-//           "rxjs": {
-//             main: "Rx.js",
-//             defaultExtension: "js"
-//           }
-//       }
-//   };
-//
-//   builder.config(config);
-//
-//   console.log(packages, config);
-//
-//   // builder.bundle(packages, "build/rxjs.umd.js", {
-//   builder.bundle('rxjs', "build/rxjs.umd.js", {
-//       normalize: true,
-//       runtime: false,
-//       minify: true,
-//       sourceMaps: true,
-//       mangle: false
-//   });
-// });

@@ -2,7 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "transpiled",
+    "outDir": "build/transpiled",
     "sourceRoot": "/",
     "baseUrl": ".",
     "paths" : {

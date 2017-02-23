@@ -1,6 +1,4 @@
 build
-compiled
-transpiled
 node_modules
 jspm_packages
 *.log
