@@ -10,7 +10,7 @@ SystemJS.config({
   transpiler: "plugin-typescript",
   packages: {
     "app": {
-      "defaultExtension___": "ts",
+      "defaultExtension": "ts",
       "meta": {
         "*.ts": {
           "loader": "plugin-typescript"
@@ -39,7 +39,11 @@ SystemJS.config({
       "child_process": "npm:jspm-nodelibs-child_process@0.2.0",
       "module": "npm:jspm-nodelibs-module@0.2.0",
       "readable-stream": "npm:readable-stream@2.2.3",
-      "typescript": "npm:typescript@2.2.1"
+      "typescript": "npm:typescript@2.2.1",
+      "elliptic": "npm:elliptic@6.4.0",
+      "hmac-drbg": "npm:hmac-drbg@1.0.0",
+      "brorand": "npm:brorand@1.1.0",
+      "minimalistic-crypto-utils": "npm:minimalistic-crypto-utils@1.0.1"
     },
     "packages": {
       "npm:source-map-support@0.4.11": {

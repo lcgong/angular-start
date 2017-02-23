@@ -1,4 +1,4 @@
-import { NgModule, Component } from "@angular/core"; 
+import { NgModule, Component } from "@angular/core";
 
 @Component({
   selector: 'who',
@@ -13,7 +13,7 @@ export class WhoComp {
 
   constructor() {
     console.log('123');
-    xyzsd;
+    // xyzsd;
     // throw 'xyz';
   }
 };
