@@ -14,8 +14,8 @@ import { WhoComp } from './who';
     ],
     bootstrap: [WhoComp]
 })
-export class AppModule {
+export class MainModule {
   constructor() {
-    console.log('app created');
+    console.log('main module created');
   }
 }

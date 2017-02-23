@@ -35,7 +35,7 @@ gulp.task('webapp', function() {
   app.use(helmet.contentSecurityPolicy({
       directives: {
         defaultSrc: ["'self'"], connectSrc : ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-eval'"],
+        scriptSrc: ["'self'", "'unsafe-eval'", "'unsafe-inline'"],
         styleSrc: ["'self'"],
         objectSrc: ["'none'"], frameSrc: ["'none'"], imgSrc: ["'self'"],
         mediaSrc: ["'self'"], fontSrc: ["'self'", "data:"],
@@ -49,11 +49,11 @@ gulp.task('webapp', function() {
   app.use(historyHandler({ // 所有没有后缀的访问路径均转向指定的页面
     index: '/index.html',
   }));
-  app.use('/build', serveStatic('build'));
-  app.use('/node_modules', serveStatic('node_modules'));
-  app.use('/jspm_packages', serveStatic('jspm_packages'));
+  app.use('/', serveStatic('build/lib'));
   app.use('/', serveStatic('build/transpiled'));
   app.use('/', serveStatic('src'));
+  app.use('/node_modules', serveStatic('node_modules'));
+  app.use('/jspm_packages', serveStatic('jspm_packages'));
 
   http.createServer(app).listen(port, () => {
     console.log(formatTimestamp() + ' ' + 'Webapp is listening on ['
@@ -105,7 +105,7 @@ const bundleOpts =  {
     format: 'umd'
 };
 
-gulp.task('thirdparty', ['thirdparty:rt', 'thirdparty:dev']);
+gulp.task('thirdparty', ['thirdparty:rt', 'thirdparty:ts']);
 
 gulp.task('thirdparty:rt', function() {
   //从jspm config读取所需要的包
@@ -119,10 +119,10 @@ gulp.task('thirdparty:rt', function() {
   let builder = new Builder();
 
   console.log('packages: ', packages.join(', '));
-  return builder.bundle(packages.join(' + '), 'build/lib.rt.js', bundleOpts);
+  return builder.bundle(packages.join(' + '), 'build/lib/rt.js', bundleOpts);
 });
 
-gulp.task('thirdparty:dev', function() {
+gulp.task('thirdparty:ts', function() {
   //从jspm config读取所需要的包
   let jspmConfigMgr = require('jspm/lib/config');
   jspmConfigMgr.loadSync();
@@ -141,5 +141,5 @@ gulp.task('thirdparty:dev', function() {
   builder.loader.config(config);
 
   console.log('packages: ', packages.sort().join(', '));
-  return builder.bundle(packages.join(' + '), 'build/lib.dev.js', bundleOpts);
+  return builder.bundle(packages.join(' + '), 'build/lib/ts.transpiler', bundleOpts);
 });
