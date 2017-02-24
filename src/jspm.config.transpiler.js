@@ -12,7 +12,7 @@ System.config({
   },
   typescriptOptions: {
     "check": true,
-    "target": "ES2015",
+    "target": "es2015",
     "module": "commonjs",
     "sourceMap": true,
     "lib": [

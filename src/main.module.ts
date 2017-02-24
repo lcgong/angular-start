@@ -2,7 +2,7 @@ import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
-import { WhoComp } from './who';
+import { WhoComponent } from './who.component';
 
 @NgModule({
     imports: [
@@ -10,9 +10,9 @@ import { WhoComp } from './who';
         FormsModule
     ],
     declarations: [
-        WhoComp,
+        WhoComponent,
     ],
-    bootstrap: [WhoComp]
+    bootstrap: [WhoComponent]
 })
 export class MainModule {
   constructor() {

@@ -9,7 +9,7 @@ import { NgModule, Component } from "@angular/core";
     <p *ngIf="name">Hello, {{name}}</p>
   `,
 })
-export class WhoComp {
+export class WhoComponent {
   name: string = '';
 
   constructor() {

@@ -1,11 +1,13 @@
 {
+  "name": "angular-start",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
     "tsc": "tsc",
     "tsc:w": "tsc -w"
   },
+  "wasm": true,
   "jspm": {
-    "name": "app",
-    "main___": "src/index.js",
     "configFiles": {
       "jspm": "src/jspm.config.js"
     },

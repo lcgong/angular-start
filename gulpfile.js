@@ -35,10 +35,10 @@ gulp.task('webapp', function() {
   app.use(helmet.contentSecurityPolicy({
       directives: {
         defaultSrc: ["'self'"], connectSrc : ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-eval'", "'unsafe-inline'"],
-        styleSrc: ["'self'"],
-        objectSrc: ["'none'"], frameSrc: ["'none'"], imgSrc: ["'self'"],
+        scriptSrc: ["'self'"], // "'unsafe-eval'", "'unsafe-inline'"
+        styleSrc: ["'self'"], imgSrc: ["'self'"],
         mediaSrc: ["'self'"], fontSrc: ["'self'", "data:"],
+        objectSrc: ["'none'"], frameSrc: ["'none'"],
         reportUri: '/report-violation',
       }
     }));
